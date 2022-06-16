@@ -11635,7 +11635,7 @@ sub message_for_host2
         }
 
         if ( $mysync->{addheader} and defined $h1_fir_ref->{$h1_msg}->{'NO_HEADER'} ) {
-                my $header = add_header( $h1_msg ) ;
+                my $header = add_header( $mysync->{user1}, $h1_msg ) ;
                 $mysync->{ debug } and myprint( "msg $h1_fold/$h1_msg adding custom header [$header]\n"  ) ;
                 ${ $string_ref } = $header . "\r\n" . ${ $string_ref } ;
         }
@@ -15524,7 +15524,7 @@ sub parse_header_msg
         my $headstr = header_construct( $mysync, $head, $side, $folder, $m_uid ) ;
 
         if ( ( ! $headstr ) and ( $mysync->{addheader} ) and ( $side eq 'Host1' ) ) {
-                my $header = add_header( $m_uid ) ;
+                my $header = add_header( $mysync->{user1}, $m_uid ) ;
                 $mysync->{ debug } and myprint( "$side: folder/uid $folder/$m_uid no header found so adding our own [$header]\n" ) ;
                 $headstr .= uc  $header  ;
                 $s_fir->{$m_uid}->{NO_HEADER} = 1;
@@ -18224,7 +18224,7 @@ sub tests_add_header
 	note( 'Entering tests_add_header()' ) ;
 
         ok( 'Message-Id: <mistake@imapsync>' eq add_header(), 'add_header no arg' ) ;
-        ok( 'Message-Id: <123456789@imapsync>' eq add_header( '123456789' ), 'add_header 123456789' ) ;
+        ok( 'Message-Id: <123456789-test-test-fqdn@imapsync>' eq add_header( 'test@test.fqdn', '123456789' ), 'add_header test@test 123456789' ) ;
 
 	note( 'Leaving  tests_add_header()' ) ;
         return ;
@@ -18232,8 +18232,9 @@ sub tests_add_header
 
 sub add_header
 {
+		my $header_user1 = shift || 'mistake' ;
         my $header_uid = shift || 'mistake' ;
-        my $header_Message_Id = 'Message-Id: <' . $header_uid . '-' . ($mysync->{user1} =~ s/[^\w]/-/gr) . '@imapsync>' ;
+        my $header_Message_Id = 'Message-Id: <' . $header_uid . '-' . ( $header_user1 =~ s/[^\w]/-/gr ) . '@imapsync>' ;
         return( $header_Message_Id ) ;
 }
 
