@@ -18233,7 +18233,7 @@ sub tests_add_header
 sub add_header
 {
         my $header_uid = shift || 'mistake' ;
-        my $header_Message_Id = 'Message-Id: <' . $header_uid . '@imapsync>' ;
+        my $header_Message_Id = 'Message-Id: <' . $header_uid . '-' . ($mysync->{user1} =~ s/[^\w]/-/gr) . '@imapsync>' ;
         return( $header_Message_Id ) ;
 }
 
