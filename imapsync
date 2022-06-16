@@ -18223,7 +18223,7 @@ sub tests_add_header
 {
 	note( 'Entering tests_add_header()' ) ;
 
-        ok( 'Message-Id: <mistake@imapsync>' eq add_header(), 'add_header no arg' ) ;
+        ok( 'Message-Id: <mistake-mistake@imapsync>' eq add_header(), 'add_header no arg' ) ;
         ok( 'Message-Id: <123456789-test-test-fqdn@imapsync>' eq add_header( 'test@test.fqdn', '123456789' ), 'add_header test@test 123456789' ) ;
 
 	note( 'Leaving  tests_add_header()' ) ;
